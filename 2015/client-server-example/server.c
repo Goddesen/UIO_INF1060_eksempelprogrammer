@@ -1,6 +1,8 @@
 #include <netdb.h> 
 #include <stdio.h>
 #include <string.h> 
+#include <unistd.h>
+#include <stdlib.h>
 
 #include <netinet/in.h> 
 #include <sys/socket.h>
@@ -8,7 +10,7 @@
 int main(void)
 {
     struct sockaddr_in serveraddr, clientaddr; 
-    int clientaddrlen;
+    socklen_t clientaddrlen;
     int request_sock, sock;
     char buf[12]; 
 
