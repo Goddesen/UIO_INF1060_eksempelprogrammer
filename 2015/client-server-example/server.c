@@ -5,7 +5,8 @@
 #include <netinet/in.h> 
 #include <sys/socket.h>
 
-int main(void) {
+int main(void)
+{
     struct sockaddr_in serveraddr, clientaddr; 
     int clientaddrlen;
     int request_sock, sock;
@@ -20,27 +21,27 @@ int main(void) {
     serveraddr.sin_addr.s_addr = INADDR_ANY;
     serveraddr.sin_port = htons(2009);
 
-    /* bind adressen til socketen */
-    bind(request_sock, (struct sockaddr *)&serveraddr, sizeof serveraddr);
+    /* Bind adressen til socketen */
+    bind(request_sock, (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 
-    /* aktiver lytting på socketen */
+    /* Aktiver lytting på socketen */
     listen(request_sock, SOMAXCONN);
 
-    /* motta en forbindelse */
-    sock = accept(request_sock,(struct sockaddr *)&clientaddr, 
-            &clientaddrlen);
+    /* Motta en forbindelse */
+    sock = accept(request_sock, (struct sockaddr *)&clientaddr, &clientaddrlen);
 
-    /* les data fra forbindelsen, og skriv dem ut */
-    read(sock, buf,11);
+    /* Les data fra forbindelsen, og skriv dem ut */
+    read(sock, buf, 11);
     buf[11] = '\0';
-    printf("%s \n",buf);
+    printf("%s\n", buf);
 
     /* Send data tilbake over forbindelsen */
-    write(sock, buf,11); 
+    write(sock, buf, 11); 
 
     /* Steng socketene */
     close(sock);
     close(request_sock);
 
+    return EXIT_SUCCESS;
 } 
    
