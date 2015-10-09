@@ -6,44 +6,42 @@
 #include <sys/msg.h> 
 #include <errno.h> 
 
-#define MSGLEN 100 
+#include "msg.h"
+
 struct text_message { 
     long mtype; 
     char mtext[MSGLEN]; 
 }; 
 
-int main(int argc, char *argv[]) 
+int main(int argc, char **argv) 
 {  
     int msqID, ret_val;
     struct text_message msg; 
 
-    if (argc != 3)
-    {
+    if (argc != 3) {
         printf("Usage: %s <key> <type>\n", argv[0]);
-        exit(1);
+        exit(EXIT_FAILURE);
     } 
 
-    /* get the existing message queue */ 
+    /* Get the existing message queue */ 
     msqID = msgget((key_t) atoi(argv[1]), 0); 
-    if (msqID == -1)
-    {
+    if (msqID < 0) {
         perror("msgget");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    /* read message of the specified type; do not block */ 
-    ret_val = msgrcv(msqID, (struct msgbuf *) &msg, MSGLEN, atoi(argv[2]), IPC_NOWAIT);
-    if (ret_val == -1) 
-    { 
+    /* Read message of the specified type; do not block */ 
+    ret_val = msgrcv(msqID, (struct msgbuf *)&msg,
+		     MSGLEN, atoi(argv[2]), IPC_NOWAIT);
+    if (ret_val < 0) { 
         if (errno == ENOMSG)
             printf("No suitable message\n");
         else
             printf("msgrcv() error\n");
-    } 
-    else 
-    {
-        printf("[%ld] %s\n", msg.mtype, msg.mtext); 
+	exit(EXIT_FAILURE);
     }
 
-    return 0; 
+    printf("[%ld] %s\n", msg.mtype, msg.mtext); 
+
+    return EXIT_SUCCESS; 
 }
