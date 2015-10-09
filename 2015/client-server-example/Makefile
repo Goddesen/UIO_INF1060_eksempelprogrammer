@@ -12,4 +12,4 @@ server: server.o
 	$(CC) $^ -o $@ $(CFLAGS)
 
 clean:
-	rm -f *~ client server
+	rm -f client server
