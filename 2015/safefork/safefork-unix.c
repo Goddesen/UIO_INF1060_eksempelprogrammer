@@ -9,20 +9,22 @@ extern int errno;
 
 static int n_processes(void)
 {
-  return system("exit `/bin/ps | /store/bin/wc -l`")/256;
+	return system("exit `/bin/ps | /store/bin/wc -l`")/256;
 }
 
 
 pid_t safefork(void)
 {
-  static int n_initial = -1;
+	static int n_initial = -1;
 
-  if (n_initial == -1)  /* Første gang funksjonen kalles: */
-    n_initial = n_processes();
-  else if (n_processes() >= n_initial+MAX_PROCESSES) {
-    sleep(2);
-    errno = EAGAIN;  return (pid_t)-1;
-  }
+	if (n_initial < 0) {
+		/* Første gang funksjonen kalles: */
+		n_initial = n_processes();
+	} else if (n_processes() >= n_initial + MAX_PROCESSES) {
+		sleep(2);
+		errno = EAGAIN;
+		return (pid_t)(-1);
+	}
 
-  return fork();
+	return fork();
 }
