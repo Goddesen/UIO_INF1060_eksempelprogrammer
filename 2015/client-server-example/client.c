@@ -41,7 +41,7 @@ int main(void)
 
     /* legg til et termineringstegn, og skriv ut til skjerm */
     buf[11] = '\0';
-    printf("%s\n",buf);
+    printf("%s\n", buf);
 
     /* Steng socketen */
     close(sock);
