@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
-all: client server
+BINARIES = client server
+all: $(BINARIES)
 
 %.o: %.c
 	$(CC) $^ -c -o $@ $(CFLAGS)
@@ -12,4 +13,4 @@ server: server.o
 	$(CC) $^ -o $@ $(CFLAGS)
 
 clean:
-	rm -f client server
+	rm -f $(BINARIES) *.o
