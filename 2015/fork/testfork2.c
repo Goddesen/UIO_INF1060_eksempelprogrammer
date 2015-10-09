@@ -7,51 +7,47 @@
 
 int main(void)
 {
-    pid_t pid, i, j, product;
+	pid_t pid, i, j, product;
 
-    pid = fork();
-    if (pid == -1)
-    {
-        printf("Failure\n");
-        exit(1);
-    }
+	pid = fork();
+	if (pid == -1) {
+		printf("Failure\n");
+		exit(EXIT_FAILURE);
+	}
 
-    if (pid != 0) /* Parent */
-    {
-        printf("parent PID=%d, child PID = %d\n", (int) getpid(), (int) pid);
-        printf("parent going to sleep...\n");
+	if (pid != 0) {
+		/* Parent */
+		printf("parent PID=%d, child PID = %d\n",
+		       (int) getpid(), (int) pid);
+		printf("parent going to sleep...\n");
 
-        sleep(1);
+		sleep(1);
 
-        kill(pid, SIGKILL);
+		kill(pid, SIGKILL);
 
-        printf("killed child PID = %d\n", (int) pid);
-        return 0;
+		printf("killed child PID = %d\n", (int) pid);
+		return 0;
 
-    }
-    else /* Child */
-    {
-        printf("child PID=%d\n", (int) getpid());
+	}
 
-        i = 0;
-        printf("Linje %d: ", i);
-        while (1) {
-            i++;      
+	/* Child */
+	printf("child PID=%d\n", (int) getpid());
 
-            product = 1;
-            for (j = 1 ; j <= 100 ; j++)
-            {
-                product *= j;
-            }
+	i = 0;
+	printf("Linje %d: ", i);
+	while (1) {
+		i++;      
+
+		product = 1;
+		for (j = 1 ; j <= 100 ; j++)
+			product *= j;
 
 
-            printf("#");
-            if ((i % 60) == 0)
-            {
-                printf("\nLinje %d: ", i);
-            }
+		printf("#");
+		if ((i % 60) == 0)
+			printf("\nLinje %d: ", i);
 
-        }
-        exit(0); /* Will never be executed */
-    }
+	}
+	
+	exit(EXIT_SUCCESS); /* Will never be executed */
 }
