@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
 BINARIES = client server
+
 all: $(BINARIES)
 
 %.o: %.c

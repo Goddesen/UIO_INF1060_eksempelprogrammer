@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
 BINARIES = testfork testfork2
+
 all: $(BINARIES)
 
 %.o: %.c

@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
 BINARIES = msgctl msgrcv msgsnd
+
 all: $(BINARIES)
 
 %.o: %.c
