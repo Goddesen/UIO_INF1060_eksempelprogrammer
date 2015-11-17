@@ -1,12 +1,18 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -O2
+BINARIES = client server
 
-all: selectserver selectclient
+all: $(BINARIES)
 
-selectserver: selectserver1.c
-	gcc -o selectserver selectserver1.c
+%.o: %.c
+	$(CC) $^ -c -o $@ $(CFLAGS)
 
-selectclient: selectclient1.c
-	gcc -o selectclient selectclient1.c
+client: client.o
+	$(CC) $^ -o $@ $(CFLAGS)
 
+server: server.o
+	$(CC) $^ -o $@ $(CFLAGS)
+
+.PHONY: clean
 clean:
-	rm -f *~ selectserver selectclient
-
+	rm -f $(BINARIES) *.o
